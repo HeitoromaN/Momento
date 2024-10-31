@@ -1,0 +1,149 @@
+Momento
+Você está prestes a explorar o banco de dados da empresa "Momento"! Com essa base de dados, vamos treinar consultas SQL e responder algumas perguntas intrigantes que vão revelar como a empresa está organizada. Vamos lá?
+
+Departamento de Tecnologia
+Inclua suas próprias informações no departamento de Tecnologia da empresa.
+
+Q: INSERT INTO funcionarios(funcionario_id,primeiro_nome,sobrenome,email,senha,telefone,data_contratacao,cargo_id,salario,gerente_id,departamento_id)
+VALUES (208,'Heitor','Chagas Feitosa','heitorchagas28@gmail.com','@7@3@17@24','11991810504','2024-12-17',5,26000.00,NULL,6);
+select * from funcionarios where primeiro_nome = "Heitor"
+
+Agora diga, quantos funcionários temos ao total na empresa?
+
+Resposta: 42 funcionários
+Q: select count(*) from funcionarios
+
+E quanto ao Departamento de Tecnologia?
+
+Resposta: 6 funcionarios
+Q: select count(*) from funcionarios where departamento_id = 6
+
+Departamento de Vendas
+Quantos funcionários trabalham no Departamento de Vendas? Use uma consulta para descobrir o número total de funcionários alocados nesse departamento.
+
+Resposta: 5 funcionarios
+Q: select count(*) from funcionarios where departamento_id = 8;
+
+Salários no Departamento de Vendas
+
+Qual é o custo total dos salários do pessoal de Vendas? Isso nos ajuda a entender o orçamento do departamento!
+
+Resposta: 51500.00
+Q: select sum(salario) from funcionarios where departamento_id = 8;
+
+Quanto o departamento de Vendas gasta em salários?
+
+Resposta: 51500.00
+Q: select sum(salario) from funcionarios where departamento_id = 8;
+
+Quais são os produtos mais vendidos e quais têm pouca ou nenhuma saída?
+
+Resposta: Uniforme do Superman (1), Batarangs Oficiais(12) - Laço da Honestidade(11) - Lança-Teias(3)
+Q: select * from vendas order by quantidade desc;
+select * from produtos;
+
+Qual é o produto mais caro no inventário da empresa?
+
+Resposta: Sabre de Luz (Mace Windu)	(990.29)
+Q: select * from produtos order by produto_price desc;
+
+Departamento de Inovações
+Um novo departamento foi criado. O departamento de Inovações. Ele será locado no Brasil. Por favor, adicione-o no banco de dados da empresa colocando quaisquer informações que você achar relevantes.
+
+Resposta: Tá ótimo
+Q: INSERT INTO escritorios(escritorio_nome,endereco,cep,cidade,estado_provincia,pais_id)
+VALUES ('Vini escritorios', '201469 Jack Black','6969','São Matheus','Xique Xique Bahia','BR');
+INSERT INTO departamentos(departamento_nome,escritorio_id) VALUES ('Inovação',3901);
+
+O departamento de Inovações está sem funcionários. Inclua alguns colegas de turma nesse departamento.
+
+Resposta: Tá ótimo
+Q: INSERT INTO funcionarios(primeiro_nome,sobrenome,email,senha,telefone,data_contratacao,cargo_id,salario,gerente_id,departamento_id)
+VALUES ('Vini','Joga','Vinijoga@momento.org','@54@58@135@162','119915303','2024-12-19',4,2400.00,NULL,6);
+INSERT INTO funcionarios(primeiro_nome,sobrenome,email,senha,telefone,data_contratacao,cargo_id,salario,gerente_id,departamento_id)
+VALUES ('Alessandra','Maranhão','Maranhense@momento.org','@48@15@1326','5135.123.4568','1989-09-25',5,17000.00,100,9);
+
+Funcionários
+Quantos funcionários da empresa Momento possuem conjuges?
+
+Resposta: Não sei te responder
+
+Qual o funcionário contratado há mais tempo na empresa?
+
+Resposta: Steven Wayne, contratado em 1987-06-17
+Q: select * from funcionarios order by data_contratacao asc limit 1;
+
+Qual o funcionário contratado há menos tempo na empresa?
+
+Resposta: Vini Joga, contratado em 2024-12-19
+Q: select * from funcionarios order by data_contratacao desc limit 1;
+
+Quem são os funcionários com mais tempo na empresa, considerando a data_contratacao?
+
+Resposta: Steven Wayne, contratado em 1987-06-17 - Alessandra Maranhão, contratado em 1989-09-25
+Q: select * from funcionarios order by data_contratacao asc limit 2;
+
+Como a média salarial dos funcionários da "Momento" evoluiu nos últimos anos? Dica: utilize a função AVG() para calcular a média salarial dos funcionários. e GROUP BY para agrupar os resultados por ano.
+
+Resposta: 
+14200.000000 - 1987
+17000.000000 - 1989
+17000.000000 - 1993
+9000.000000	- 1990
+6000.000000	- 1991
+6450.000000	- 1997
+5816.666667	- 1998
+5150.000000	- 1999
+12847.500000 - 1994
+5500.000000 - 1995
+9750.000000	- 1996
+19650.000000 - 2000
+14200.000000 - 2024
+Q: select AVG(salario), YEAR(data_contratacao) from funcionarios group by YEAR(data_contratacao);
+
+Médias salariais
+Qual a média salarial dos funcionários da empresa Momento, excluindo-se o CEO, CMO e CFO?
+
+Resposta: 9495.952381
+Q: select AVG(salario) from funcionarios where cargo_id != 1 and cargo_id != 2 and cargo_id != 3;
+
+Qual a média salarial do departamento de tecnologia?
+
+Resposta: 8171.428571
+Q: select AVG(salario) from funcionarios where departamento_id = 6;
+
+Qual o departamento com a maior média salarial?
+
+Resposta: Tecnologias avançadas
+Q: select AVG(salario), departamento_id from funcionarios group by departamento_id order by AVG(salario) desc limit 1;
+
+Qual o departamento com o menor número de funcionários?
+
+Resposta: Inovação
+Q: select count(*), departamento_id from funcionarios group by departamento_id order by count(*) asc limit 1;
+
+Produtos
+Pensando na relação quantidade e valor unitario, qual o produto mais valioso da empresa?
+
+Resposta: Sabre de Luz (Mace Windu)	(990.29)
+Q: select * from produtos order by produto_price desc limit 1;
+
+Qual o produto mais vendido da empresa?
+
+Resposta: Uniforme do Superman (1)
+Q: select * from vendas order by quantidade;
+
+Qual o produto menos vendido da empresa?
+
+Resposta: Uniforme do Superman
+Q: select * from vendas order by quantidade asc;
+
+Escritórios
+Quantos escritórios a "Momento" possui em cada região? (Dica: relacione as tabelas regioes e escritorios).
+
+R: US(3), CA(1), UK(3), DE(1), BR(1)
+Q: Select * from escritorios
+
+Qual é o custo total de suprimentos em cada escritório? Que tal ordenar os resultados para ver qual escritório possui os suprimentos mais caros?
+
+R: Não sei te responder, mano
